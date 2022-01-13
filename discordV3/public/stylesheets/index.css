@@ -1,69 +1,52 @@
-@keyframes move_wave {
-  0% {
-      transform: translateX(0) translateZ(0) scaleY(1)
-  }
-  50% {
-      transform: translateX(-25%) translateZ(0) scaleY(0.55)
-  }
-  100% {
-      transform: translateX(-50%) translateZ(0) scaleY(1)
-  }
+canvas {
+  display: block;
+  /* vertical-align: bottom; */
 }
-.waveWrapper {
-  overflow: hidden;
-  position: relative;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  top: 0;
-  margin: auto;
-}
-.waveWrapperInner {
-  position: fixed;
+
+#particles-js {
+  position: absolute;
   width: 100%;
-  overflow: hidden;
   height: 100%;
-  bottom: -1px;
-  background-image: linear-gradient(to top, #863737 20%, #3c2727 80%);
+  background: #66271c;
 }
-.bgTop {
-  z-index: 15;
-  opacity: 0.5;
+
+.text {
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  transform: translate(50%, -50%);
+  color: #fff;
+  max-width: 90%;
+  padding: 2em 3em;
+  background: rgba(0, 0, 0, 0.4);
+  text-shadow: 0px 0px 2px #131415;
+  font-family: "Open Sans", sans-serif;
 }
-.bgMiddle {
-  z-index: 10;
-  opacity: 0.75;
+
+h1 {
+  font-size: 2.25em;
+  font-weight: 700;
+  letter-spacing: -1px;
 }
-.bgBottom {
-  z-index: 5;
+
+a,
+a:visited {
+  color: #e34234;
+  transition: 0.25s;
 }
-.wave {
-  position: fixed;
-  left: 0;
-  width: 200%;
-  height: 100%;
-  background-repeat: repeat no-repeat;
-  background-position: 0 bottom;
-  transform-origin: center bottom;
+
+a:hover,
+a:focus {
+  color: #ba160c;
 }
-.waveTop {
-  background-size: 50% 100px;
+
+#logo{
+  display: flex;
+  width: auto;
+  height:10vh ;
 }
-.waveAnimation .waveTop {
-animation: move-wave 3s;
- -webkit-animation: move-wave 3s;
- -webkit-animation-delay: 1s;
- animation-delay: 1s;
-}
-.waveMiddle {
-  background-size: 50% 120px;
-}
-.waveAnimation .waveMiddle {
-  animation: move_wave 10s linear infinite;
-}
-.waveBottom {
-  background-size: 50% 100px;
-}
-.waveAnimation .waveBottom {
-  animation: move_wave 15s linear infinite;
+
+#nav-bar{
+  background: rgb(8, 8, 8);
+  background: linear-gradient(90deg, rgb(8, 8, 8)  0%, rgb(8, 8, 8) 15%, rgba(88, 36, 36, 0.993) 100%);
 }
