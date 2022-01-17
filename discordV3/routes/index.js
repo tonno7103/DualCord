@@ -6,6 +6,7 @@ router.get("/", (req, res, next) => {
     res.render("index", {
         home: `${address}/home`,
         title: "Steful", 
+        logged: false
     })
 });
 
