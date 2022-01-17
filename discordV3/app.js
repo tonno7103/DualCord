@@ -16,6 +16,7 @@ const app = express();
 const loader = require("./Scripts/loader");
 loader.loadCommands();
 loader.loadBluePrints(app);
+loader.loadSession(app);
 
 /* view engine setup */
 app.engine("handlebars", hbs.engine);
