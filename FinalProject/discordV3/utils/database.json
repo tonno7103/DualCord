@@ -1,0 +1,10 @@
+{
+  "user": {
+    "name": "tonno",
+    "password": "Password1!"
+  },
+  "name": "localhost",
+  "port": "3306",
+  "database": "discord",
+  "imagesLogo": "/images"
+}

@@ -1,0 +1,22 @@
+body{
+    background-color: var(--background) !important; 
+}
+
+.card{
+    background-color: var(--background) !important; 
+}
+label{
+    color: var(--text) !important;
+}
+.img-account-profile{
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+input[type="file"]{
+    display: none;
+}

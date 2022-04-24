@@ -1,0 +1,39 @@
+:root{
+    --red-usless: #252323;
+    --background: #24272c;
+    --text: #ffffff;
+    --red: #ff0000;
+}
+
+html{
+    scroll-behavior:smooth;
+    background-color: var(--background);
+    border-top: var(--background);
+}
+
+::-webkit-scrollbar {
+    width: 7px;
+}
+::-webkit-scrollbar-track {
+    background-color: #272B33;
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--red);
+    border-radius: 3px;
+}
+
+.center{
+    position: absolute;
+    top: 50%; 
+    right: 50%; 
+    transform: translate(50%, -50%); 
+}
+
+.navbar-main{
+    background: rgba( 3, 0, 0, 0.75 );
+    box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+    backdrop-filter: blur( 6.5px );
+    -webkit-backdrop-filter: blur( 6.5px );
+}

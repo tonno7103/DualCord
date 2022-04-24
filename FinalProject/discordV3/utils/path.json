@@ -1,0 +1,6 @@
+{
+    "address": "http://localhost:",
+    "nodePort": "8080",
+    "phpPort": "8080/l",
+    "title": "Stuful"
+}

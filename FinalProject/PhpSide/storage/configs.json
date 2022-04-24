@@ -1,0 +1,10 @@
+{
+    "address": "http://localhost:",
+    "phpPort": "8080/l",
+    "nodePort": "8080",
+    "session_time": 120,
+    "memcached": {
+        "host": "localhost",
+        "port": 11211
+    }
+}

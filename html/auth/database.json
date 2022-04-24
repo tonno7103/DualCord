@@ -1,9 +1,0 @@
-{
-  "user": {
-    "name": "root",
-    "password": ""
-  },
-  "name": "localhost",
-  "port": "3306",
-  "database": "discord"
-}
