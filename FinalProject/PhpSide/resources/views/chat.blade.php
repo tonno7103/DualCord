@@ -9,52 +9,42 @@
             <div class="ks-messenger">
                 <div class="ks-discussions">
                     <div class="ks-search">
-                        <div class="input-icon icon-right icon icon-lg icon-color-primary">
-                            <input id="search-username" type="text" class="form-control" placeholder="Enter a username">
+                        <div class="input-icon icon-right icon icon-lg icon-color-primary d-flex" >
+                            <input id="search-username" type="text" class="form-control" placeholder="Enter a username to create a new chat">
                             <span class="icon-addon">
                                 <span class="la la-search"></span>
                             </span>
                         </div>
                     </div>
-                    <div class="ks-body ks-scrollable jspScrollable" data-auto-height="" style="height: 85vh; overflow-y: auto; padding: 0; overflow-x: hidden" tabindex="0">
-                        <div class="jspContainer" style="width: 339px; height: 550px;">
-                            <div class="jspPane" style="padding: 0; top: 0; width: 329px;">
-                                <ul class="ks-items" id="current-chats">
-{{--                                    <li class="ks-item" name="chat" id=1 onclick="">--}}
-{{--                                        <a>--}}
-{{--                                            <span class="ks-group-amount"><img style="border-radius: 20px" src=""/></span>--}}
-{{--                                            <div class="ks-body">--}}
-{{--                                                <div class="ks-name">--}}
-{{--                                                    <p>TestChat</p>--}}
-{{--                                                    <span class="ks-datetime">just now</span>--}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
-{{--                                        </a>--}}
-{{--                                    </li>--}}
+                    <div class="ks-body ks-scrollable jspScrollable" data-auto-height="" style="height: 77vh; overflow-y: auto; padding: 0; overflow-x: hidden" tabindex="0">
+                        <div class="jspContainer" style="padding-top: 10px">
+                            <div class="jspPane" style="padding: 0; top: 0;">
+                                <ul class="ks-items" id="current-chats"></ul>
+                                <ul class="ks-items" id="searched-usernames" style="display: none">
                                 </ul>
-                                <ul class="ks-items" id="searched-usernames" style="display: none"></ul>
                             </div>
                         </div>
+                        <ul class="ks-items justify-content-center" id="loading-chats" style="display: flex">
+                            <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+                        </ul>
+                    </div>
+                    <div class="d-flex" style="justify-content: center">
+                        <button type="button" style="background: var(--bs-light); color: black; width: 80%" id="createGroup" class="btn btn-primary btn-block shadow-none border-0">
+                            Create a group
+                        </button>
                     </div>
                 </div>
 
-                <div class="ks-messages ks-messenger__messages" style="height: 90vh;">
+                <div class="ks-messages ks-messenger__messages" style="height: 90vh; width: 50%;">
                     <div class="ks-header">
                         <div class="ks-description">
                             <h2 class="ks-name" id="chat-name"></h2>
                             <div class="ks-amount" id="chat-members"></div>
                         </div>
-                        <div class="ks-controls">
-                            <div class="dropdown">
-                                <button class="btn btn-primary-outline ks-light ks-no-text ks-no-arrow" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <span class="la la-ellipsis-h ks-icon"></span>
-                                </button>
-                            </div>
-                        </div>
                     </div>
-                    <div class="ks-body ks-scrollable jspScrollable" data-auto-height="" data-reduce-height=".ks-footer" data-fix-height="32" style="overflow-y: scroll; overflow-x: hidden; padding: 0; width: 701px;" tabindex="0" id="messagesDiv">
-                        <div class="jspContainer" style="width: 701px; height: 481px;">
-                            <div class="jspPane" style="padding: 0; top: 0; width: 691px;">
+                    <div class="ks-body ks-scrollable jspScrollable" data-auto-height="" data-reduce-height=".ks-footer" data-fix-height="32" style="overflow-y: scroll; overflow-x: hidden; padding: 0; width: 100%;" tabindex="0" id="messagesDiv">
+                        <div class="jspContainer">
+                            <div class="jspPane" style="padding: 0; top: 0">
                                 <ul class="ks-items" id="messages"></ul>
                             </div>
                         </div>
@@ -75,8 +65,9 @@
             </div>
         </div>
     </div>
-    </div>
-<script defer>
+
+<script>
+
     (()=>{
         let currentChat = undefined;
         let oldHeight = $('#messages').height();
@@ -85,17 +76,22 @@
         startApp();
         pusher.subscribe('private-user.' + {{Auth::id()}}).bind('App\\Events\\NewChat', async (data)=>{
             const chat = await getChatById(data.chatting.chat_id);
-            console.log(chat);
             chat['chat_id'] = chat.id;
-            await createChat(chat);
+            createChat(chat);
         })
 
         async function startApp(){
+            const loading = document.getElementById('loading-chats');
+            loading.style.display = 'flex';
+            document.getElementById('current-chats').style.display = 'none';
             chats = await getChats();
-            for (let i = 0; i < chats.length; i++) {
-                await createChat(chats[i]);
-            }
+            createChats(chats)
+                .then(()=>{
+                    loading.style.display = 'none';
+                    document.getElementById('current-chats').style.display = 'block';
+                })
         }
+
         document.getElementById('text-message').addEventListener('keyup', async function(e) {
             if(e.keyCode === 13) {
                 await sendMessage(document.getElementById('text-message').value);
@@ -105,23 +101,34 @@
             await sendMessage(document.getElementById('text-message').value);
         });
 
+        let lastText = '';
+
         document.getElementById('search-username').addEventListener('input', async function() {
             if(running) return;
+            const text = document.getElementById('search-username').value;
             await removeChild(document.getElementById('searched-usernames'));
             const usersDiv = document.getElementById('current-chats');
-            if(document.getElementById('search-username').value === '' ) {
+            if(text === '' || text.trim() === '') {
+                if (lastText === '') return;
+                lastText = '';
+                await removeChild(usersDiv);
                 document.getElementById('searched-usernames').style.display = 'none';
                 document.getElementById('current-chats').style.display = 'block';
-                await removeChild(usersDiv);
                 await startApp();
                 return;
             }
+            lastText = text;
             running = true;
             document.getElementById('searched-usernames').style.display = 'block';
             document.getElementById('current-chats').style.display = 'none';
-            const users = await searchForUsers(document.getElementById('search-username').value);
-            await createSearchChat(users);
+            await removeChild(document.getElementById('messages'));
+            const loading = document.getElementById('loading-chats');
+            loading.style.display = 'flex';
+            document.getElementById('current-chats').style.display = 'none';
+            await createSearchChat(await searchNotPrivateUsers(text));
             await removeChild(usersDiv);
+            loading.style.display = 'none';
+            document.getElementById('current-chats').style.display = 'block';
             running = false;
         });
         $(document).on('click', 'li[name="chat"]', async function (){
@@ -145,6 +152,7 @@
 
             await removeChild(document.getElementById('current-chats'));
             document.getElementById('current-chats').style.display = 'block';
+
             const response = await createPrivateChat(selectedUser);
             await startApp();
             document.getElementById(response[1].id).click();
@@ -188,10 +196,9 @@
         function createMessage(message){
             const messagesContainer = document.getElementById('messages');
             const user_id = {{Auth::id()}};
-
             $(messagesContainer).append(
                 `<li class="ks-item ${user_id === message.owner_id ? 'ks-from' : 'ks-self'}" id="${message.id}">
-                    <div class="ks-body">
+                    <div class="ks-body" style="overflow-wrap: anywhere;">
                         <div class="ks-header">
                             <span class="ks-name">${message.user.username}</span>
                             <span class="ks-datetime">${message.created_at}</span>
@@ -205,55 +212,112 @@
                 createMessage(messages[i]);
             }
         }
-        async function createChat(chat){
-            if(!chat.is_group){
-                const otherMember = await getOtherMemberInfo(await getChatMembersByChatId(chat.chat_id));
-                $('#current-chats').append(
-                    `<li class="ks-item" name="chat" id=${chat.chat_id}>
-                    <a>
-                        <span class="ks-group-amount"><img onerror="setDefaultImage(this)" style="border-radius: 20px" src="images/${otherMember['id']}.${otherMember['image_format']}"/></span>
-                        <div class="ks-body">
-                            <div class="ks-name">
-                                <p>${otherMember['username']}</p>
-                            </div>
-                    </div>
-                    </a>
-                </li>`
-                )
+        function createChats(chats){
+            return new Promise((resolve)=>{
+                for (let i = 0; i < chats.length; i++) {
+                    createChat(chats[i]);
+                }
+                resolve();
+            })
+        }
+        function createPrivate(chat){
+            getChatMembersByChatId(chat.chat_id)
+                .then(data => {
+                    getOtherMemberInfo(data)
+                        .then(otherMember =>{
+                            $('#current-chats').append(
+                                `<li class="ks-item" name="chat" id=${chat.chat_id}>
+                                        <a>
+                                            <span class="ks-group-amount"><img loading="lazy" onerror="setDefaultImage(this)" style="width: 36px; height: 36px;" class="rounded-circle" src="images/${otherMember['id']}.${otherMember['image_format']}"/></span>
+                                            <div class="ks-body">
+                                                <div class="ks-name">
+                                                    <p>${otherMember['username']}</p>
+                                                </div>
+                                        </div>
+                                        </a>
+                                    </li>`)
+                        })
+                })
+        }
+
+        function createGroup(chat){
+            if(chat.chat !== undefined) chat = chat.chat;
+            $('#current-chats').append(
+                `<li class="ks-item" name="chat" id=${chat.id}>
+                        <a>
+                            <span class="ks-group-amount">
+                                <img loading="lazy" style="width: 36px; height: 36px;" class="rounded-circle" src="{{$home}}{{$nodePort}}/images/group_image.png"/>
+                            </span>
+                            <div class="ks-body">
+                                <div class="ks-name">
+                                    <p>${chat.name}</p>
+                                </div>
+                        </div>
+                        </a>
+                    </li>`)
+        }
+        function createChat(chat){
+            if(chat.chat === undefined){
+                if(chat.is_group){
+                    createGroup(chat);
+                } else{
+                    createPrivate(chat);
+                }
+            }else{
+                if(chat.chat.is_group){
+                    createGroup(chat);
+                } else{
+                    createPrivate(chat);
+                }
             }
         }
         async function createSearchChat(users){
+            if(users === undefined) return;
             for (let i = 0; i < users.length; i++) {
                 const user = users[i];
                 $('#searched-usernames').append(
                     `<li class="ks-item" name="search-chat" id=${user.id}>
                     <a>
-                        <span class="ks-group-amount"><img onerror="setDefaultImage(this)" style="border-radius: 20px" src="images/${user.id}.${user.image_format}"/></span>
+                        <span class="ks-group-amount"><img onerror="setDefaultImage(this)" style="max-width: 40px;border-radius: 50%;" src="images/${user.id}.${user.image_format}" alt=""/></span>
                         <div class="ks-body">
                             <div class="ks-name">
                                 <p>${user.username}</p>
                             </div>
                     </div>
-                    </a>`);
+                    </a>
+                    </li>`);
             }
         }
 
+        /* Api integration */
 
         async function getOtherMemberInfo(members){
-            const output = {};
-            for (let i = 0; i < members.length; i++) {
-                if(members[i].user_id !== {{Auth::id()}}){
-                    output['username'] = members[i].user.username;
-                    output['id'] = members[i].user.id;
-                    output['image_format'] = members[i].user.image_format;
-                    return output;
+            return new Promise((resolve, reject) => {
+                const output = {};
+                for (let i = 0; i < members.length; i++) {
+                    if(members[i].user_id !== {{Auth::id()}}){
+                        output['username'] = members[i].user.username;
+                        output['id'] = members[i].user.id;
+                        output['image_format'] = members[i].user.image_format;
+                        resolve(output);
+                    }
                 }
-            }
+            })
 
         }
         async function getChatMembersByChatId(id){
-            const response = await fetch('{{$home . $phpPort}}/chat/'+id+'/members')
-            return await response.json();
+            return new Promise(function(resolve, reject){
+                $.ajax({
+                    url: '{{$home . $phpPort}}/chat/'+id+'/members',
+                    type: 'GET',
+                    success: function(data){
+                        resolve(data);
+                    },
+                    error: function(data){
+                        reject(data);
+                    }
+                });
+            });
         }
         async function getChats(){
             const response = await fetch('{{$home . $phpPort}}/chats');
@@ -277,22 +341,28 @@
             });
             return await response.json();
         }
+        async function searchNotPrivateUsers(text){
+            const response = await fetch('{{$home . $phpPort}}/chat/not-in-private/'+text,{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{csrf_token()}}'
+                },
+                body: JSON.stringify({
+                    'user_id': {{Auth::id()}}
+                })
+            });
+            return await response.json();
+        }
 
         async function getMessages(id){
             const response = await fetch('{{$home . $phpPort}}/chat/'+id + '/messages');
             return await response.json();
         }
-        async function searchForUsers(username){
-            const response = await axios.get(
-                '{{$home . $phpPort}}/user/search/'+username
-            );
-            return response.data;
-        }
         async function connect(){
             if (currentChat !== undefined) {
                 window.Echo.private('chat.' + currentChat)
                     .listen('newChatMessage', function (data) {
-                        console.log(data);
                         if(data['message'].owner_id !== {{Auth::id()}}){
                             oldHeight = $('#messages').height();
                             createMessage(data['message']);
@@ -307,6 +377,13 @@
 
             }
         }
+
+    })();
+
+    (()=>{
+        document.getElementById('createGroup').addEventListener('click', function(){
+            window.location.replace('{{$home . $phpPort}}/group/create');
+        });
     })();
 </script>
 

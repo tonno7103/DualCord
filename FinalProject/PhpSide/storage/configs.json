@@ -1,8 +1,7 @@
 {
-    "address": "http://localhost:",
-    "phpPort": "8080/l",
-    "nodePort": "8080",
-    "session_time": 120,
+    "address": "https://8656-151-71-109-144.eu.ngrok.io",
+    "phpPort": "/l",
+    "nodePort": "",
     "memcached": {
         "host": "localhost",
         "port": 11211

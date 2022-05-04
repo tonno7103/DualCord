@@ -31,4 +31,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Models\ChattingClient');
     }
+
+    public function role(): HasMany
+    {
+        return $this->hasMany('App\Models\Role', 'user_id');
+    }
 }

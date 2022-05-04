@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "memcached": "memcached -d",
-    "start": "node ./bin/www"
+    "start": "nodemon ./bin/www"
   },
   "dependencies": {
     "aes256": "^1.1.0",
@@ -16,7 +16,9 @@
     "cookies": "^0.8.0",
     "debug": "~2.6.9",
     "dotenv": "^16.0.0",
+    "ejs": "^3.1.7",
     "express": "~4.16.1",
+    "express-ejs-extend": "^0.0.1",
     "express-handlebars": "^6.0.2",
     "express-http-proxy": "^1.6.3",
     "express-session": "^1.17.2",
@@ -32,6 +34,7 @@
     "node-php": "^0.0.1",
     "npm": "^8.7.0",
     "php-unserialize": "^0.0.1",
+    "pwa-asset-generator": "^6.0.8",
     "url": "^0.11.0"
   }
 }

@@ -1,15 +1,8 @@
 const express = require('express');
 const path = require('path');
-const expbar = require("express-handlebars");
 const proxy = require('express-http-proxy');
 const {phpPort} = require('./utils/path.json')
-const bodyParser = require('body-parser');
 
-const hbs = expbar.create({
-  defaultLayout: "main",
-  layoutsDir: path.join(__dirname, "views/mainLayout"),
-  partialsDir: path.join(__dirname, "views/pieces")
-});
 
 
 const app = express();
@@ -18,9 +11,9 @@ loader.loadCommands();
 loader.loadBluePrints(app);
 
 /* view engine setup */
-app.engine("handlebars", hbs.engine);
+app.engine('ejs', require('express-ejs-extend'));
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'handlebars');
+app.set('view engine', 'ejs');
 
 
 app.use("/l", proxy(`127.0.0.1:8081`, {}));

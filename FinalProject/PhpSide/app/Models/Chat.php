@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Chat extends Model
 {
     use HasFactory;
+    public $timestamps = false;
 
     public function messages(): HasMany
     {

@@ -2175,7 +2175,8 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var laravel_echo__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! laravel-echo */ "./node_modules/laravel-echo/dist/echo.js");
-window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js"); // npm run dev
+
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
  * to our Laravel back-end. This library automatically handles sending the
@@ -2198,14 +2199,13 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   key: "17c6acbe40d0f6fa6e63",
   cluster: "eu",
   forceTLS: true
-});
-Pusher.logToConsole = true;
+}); // Pusher.logToConsole = true;
+
 window.pusher = new Pusher("17c6acbe40d0f6fa6e63", {
   cluster: "eu",
   forceTLS: true,
   authEndpoint: '/l/broadcasting/auth'
 });
-window.pusher.timeout = 30000;
 
 /***/ }),
 

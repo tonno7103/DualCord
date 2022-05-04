@@ -1,27 +1,10 @@
 @section("sidebarElements")
-    @for ($i = 0; $i < 10; $i++)
-        <li>
-            <a href="{{$home}}{{$nodePort}}/user"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>Directs</a>
-        </li>
-        <li>
-            <a href="{{$home}}{{$nodePort}}/user"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>Directs</a>
-        </li>
-        <li>
-            <a href="{{$home}}{{$nodePort}}/user"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>Directs</a>
-        </li>  
-    @endfor
-        <li>
-            <a href="{{$home}}{{$nodePort}}/user"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>---Servers---</a>
-        </li>
-    @for ($i = 0; $i < 10; $i++)
-        <li>
-            <a href="{{$home}}{{$nodePort}}/user"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>Directs</a>
-        </li>
-        <li>
-            <a href="{{$home}}{{$nodePort}}/user"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>Directs</a>
-        </li>
-        <li>
-            <a href="{{$home}}{{$nodePort}}/user"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>Directs</a>
-        </li>  
-    @endfor
+    <link rel="stylesheet" href="{{$home}}{{$nodePort}}/stylesheets/sidebar.css">
+    <div class="l-navbar" id="nav-bar">
+        <nav class="nav">
+{{--            <div> <a href="#" class="nav_logo"> <i class='bx bx-layer nav_logo-icon'></i> <span class="nav_logo-name">BBBootstrap</span> </a>--}}
+{{--                <div class="nav_list"> <a href="#" class="nav_link active"> <i class='bx bx-grid-alt nav_icon'></i> <span class="nav_name">Dashboard</span> </a> <a href="#" class="nav_link"> <i class='bx bx-user nav_icon'></i> <span class="nav_name">Users</span> </a> <a href="#" class="nav_link"> <i class='bx bx-message-square-detail nav_icon'></i> <span class="nav_name">Messages</span> </a> <a href="#" class="nav_link"> <i class='bx bx-bookmark nav_icon'></i> <span class="nav_name">Bookmark</span> </a> <a href="#" class="nav_link"> <i class='bx bx-folder nav_icon'></i> <span class="nav_name">Files</span> </a> <a href="#" class="nav_link"> <i class='bx bx-bar-chart-alt-2 nav_icon'></i> <span class="nav_name">Stats</span> </a> </div>--}}
+{{--            </div> <a href="#" class="nav_link"> <i class='bx bx-log-out nav_icon'></i> <span class="nav_name">SignOut</span> </a>--}}
+        </nav>
+    </div>
 @stop

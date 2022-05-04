@@ -37,7 +37,8 @@ body{
 }
 
 .ks-messenger .ks-discussions>.ks-search>.input-icon {
-    width: 100%
+    width: 100%;
+    height: 100%
 }
 
 .ks-messenger .ks-discussions>.ks-search .form-control {

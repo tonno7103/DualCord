@@ -17,7 +17,7 @@ router.get("/", (req, res, next) => {
                     const username = result[0].username
                     const image_format = result[0].image_format
                     const image = `${address}${phpPort}${imagesLogo}/${data}.${image_format}`
-                    infos = {
+                    let infos = {
                         username: username,
                         imagePath: image
                     }
@@ -25,7 +25,7 @@ router.get("/", (req, res, next) => {
                         home: `${address}`,
                         nodePort: `${nodePort}`,
                         phpPort: `${phpPort}`,
-                        title: "Stuful",
+                        title: "DualCord",
                         username: infos.username,
                         imagePath: infos.imagePath
                     })
@@ -36,7 +36,7 @@ router.get("/", (req, res, next) => {
                         home: `${address}`,
                         nodePort: `${nodePort}`,
                         phpPort: `${phpPort}`,
-                        title: "Stuful",
+                        title: "DualCord",
                     })
                 })
         })
@@ -46,7 +46,7 @@ router.get("/", (req, res, next) => {
                 home: `${address}`,
                 nodePort: `${nodePort}`,
                 phpPort: `${phpPort}`,
-                title: "Stuful",
+                title: "DualCord",
             })
         });
 });

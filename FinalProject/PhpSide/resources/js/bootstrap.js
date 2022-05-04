@@ -1,5 +1,5 @@
 window._ = require('lodash');
-
+// npm run dev
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
  * to our Laravel back-end. This library automatically handles sending the
@@ -28,7 +28,7 @@ window.Echo = new Echo({
     forceTLS: true
 });
 
-Pusher.logToConsole = true;
+// Pusher.logToConsole = true;
 window.pusher = new Pusher(process.env.MIX_PUSHER_APP_KEY, {
     cluster: "eu",
     forceTLS: true,

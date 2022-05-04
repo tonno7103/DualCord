@@ -1,23 +1,26 @@
 @extends('auth.layouts.basic')
 @section('title', 'Logout')
 @section('content')
-    <h1>Logout success</h1>
     @php
-           session_start();
-           $data = json_decode(file_get_contents(storage_path() . "/configs.json"), true);
-           $url = $data['address'] . $data['nodePort'] . "/logout";
-           $ch = curl_init();
-
-           curl_setopt($ch, CURLOPT_URL, $url);
-           curl_setopt($ch, CURLOPT_POST, 1);
-           curl_setopt($ch, CURLOPT_POSTFIELDS, "&key=" . session_id());
-           curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-           $result = curl_exec($ch);
-           $result = json_decode($result, true);
-           curl_close($ch);
+        session_start();
+        $data = json_decode(file_get_contents(storage_path() . "/configs.json"), true);
+        $url = $data['address'] . $data['nodePort'] . "/logout";
     @endphp
-    {{ Redirect::to($data['address'] . $data['nodePort'])->send() }}
-    <script defer>
-        window.location.replace = "{{ $data['address'] . $data['nodePort'] }}";
-    </script>
+    <div class="main">
+        <script>
+            fetch('{{ $url }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: 'key={{ session_id() }}'
+            }).then(function (response) {
+                return response.json();
+            }).then(function (data) {
+                console.log(data);
+                window.location.replace('{{$data['address'] . $data['nodePort']}}');
+            });
+        </script>
+    </div>
 @stop

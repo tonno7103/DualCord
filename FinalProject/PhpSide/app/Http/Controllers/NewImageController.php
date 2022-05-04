@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\File;
+use Imagick;
+use Intervention\Image\Facades\Image;
 
 class NewImageController extends Controller
 {
@@ -20,7 +20,7 @@ class NewImageController extends Controller
 
     public function uploadImage(Request $request){
         $credentials = $request->validate([
-            "imageInput" => "required|image|mimes:jpeg,png,jpg,gif,svg|max:200000",
+            "imageInput" => "required|image|mimes:jpeg,png,jpg,gif,svg,webp,bmp|max:200000",
         ]);
         $user = Auth::user();
 
@@ -31,7 +31,16 @@ class NewImageController extends Controller
 
         $image = $credentials['imageInput'];
         $imageName = $user->id . "." . $image->getClientOriginalExtension();
-        $image->move("images/" , $imageName);
+        if($image->getClientOriginalExtension() == 'gif'){
+            $image->move("images/" , $imageName);
+        }
+        else{
+            $img = Image::make($image->path());
+            $img->resize(128, 128, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save(public_path('images/' . $imageName));
+        }
+
         $user->image_format = $image->getClientOriginalExtension();
         $user->save();
 

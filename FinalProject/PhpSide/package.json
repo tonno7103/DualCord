@@ -16,5 +16,8 @@
         "lodash": "^4.17.19",
         "postcss": "^8.1.14",
         "pusher-js": "^7.0.6"
+    },
+    "dependencies": {
+        "boxicons": "^2.1.2"
     }
 }

@@ -37,7 +37,7 @@
                     <div class="card-header" style="color: white">Profile Picture</div>
                     <div class="card-body text-center">
                         <img class="img-account-profile rounded-circle mb-2" src="{{$home}}{{$phpPort}}/images/{{$user->id}}.{{$imageFormat}}" alt="Profile Image" id="image" onerror="setDefaultImage(this)">
-                        <p class="small font-italic mb-4" style="color: white; font-size: 80%">Supported: JPEG, PNG, JPG, GIF, SVG</p>
+                        <p class="small font-italic mb-4" style="color: white; font-size: 80%">Supported: JPEG, PNG, JPG, GIF, SVG, WEBP, BMP</p>
                         <div>
                             @if(!$defaultImage)
                                 <form action="{{$home}}{{$phpPort}}/user/removeImage" method="post">

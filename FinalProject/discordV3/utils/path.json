@@ -1,6 +1,6 @@
 {
-    "address": "http://localhost:",
-    "nodePort": "8080",
-    "phpPort": "8080/l",
-    "title": "Stuful"
+    "address": "https://8656-151-71-109-144.eu.ngrok.io",
+    "nodePort": "",
+    "phpPort": "/l",
+    "title": "DualCord"
 }
