@@ -142,7 +142,7 @@ class NewChatController extends Controller
                         WHERE user_id = $user
                     )
                 )
-            ) AND id != 1"
+            )"
         );
     }
 

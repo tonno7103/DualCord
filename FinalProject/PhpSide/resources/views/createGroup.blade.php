@@ -1,4 +1,5 @@
 @extends('layouts.basic')
+@section('title', 'Create Group')
 @extends('layouts.sidebarElements')
 @section('content')
     <link rel="stylesheet" href="{{$home}}{{$nodePort}}/stylesheets/directs.css"/>
@@ -148,7 +149,7 @@
                         `<li class="ks-item ${selectedUsersIds.includes(user.id) ? 'ks-active' : ''}" name="chat" id=${user.id}>
                         <a>
                             <span class="ks-group-amount">
-                                <img loading="lazy" onerror="setDefaultImage(this)" style="width: 36px; height: 36px;" class="rounded-circle" src="{{$home}}{{$phpPort}}/images/${user.id}.${user.image_format}"/>
+                                <img loading="lazy" alt="" onerror="setDefaultImage(this)" style="width: 36px; height: 36px;" class="rounded-circle" src="{{$home}}{{$phpPort}}/images/${user.id}.${user.image_format}"/>
                             </span>
                             <div class="ks-body">
                                 <div class="ks-name">
@@ -187,7 +188,7 @@
                         data.forEach(user => {
                             const html = `<li class="ks-item ${selectedUsersIds.includes(user.id) ? 'ks-active' : ''}" name="userSelect" id=${user.id}>
                                         <a>
-                                            <span class="ks-group-amount"><img loading="lazy" onerror="setDefaultImage(this)" style="width: 36px; height: 36px;" class="rounded-circle" src="{{$home}}{{$phpPort}}/images/${user.id}.${user.image_format}"/></span>
+                                            <span class="ks-group-amount"><img loading="lazy" alt="" onerror="setDefaultImage(this)" style="width: 36px; height: 36px;" class="rounded-circle" src="{{$home}}{{$phpPort}}/images/${user.id}.${user.image_format}"/></span>
                                             <div class="ks-body">
                                                 <div class="ks-name">
                                                     <p>${user.username}</p>

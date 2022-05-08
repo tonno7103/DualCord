@@ -67,7 +67,7 @@ class NewAccountController extends Controller
 
     public function getUser(Request $request, $user_id){
         $user = User::where('id', $user_id)->first();
-        return response()->json(['username' => $user->username, 'image_format' => $user->image_format]);
+        return response()->json(['username' => $user->username, 'image_format' => $user->image_format, "id" => $user->id]);
     }
 
     public function search(Request $request, $username){

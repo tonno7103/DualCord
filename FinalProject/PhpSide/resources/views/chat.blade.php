@@ -54,11 +54,6 @@
                         <div class="ks-controls">
                             <button class="btn btn-primary" id="send">Send</button>
                             <a href="#" class="la la-paperclip ks-attachment"></a>
-                            <div class="dropdown dropup">
-                                <button class="btn btn-link ks-smile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <span class="la la-smile-o"></span>
-                                </button>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -228,7 +223,7 @@
                             $('#current-chats').append(
                                 `<li class="ks-item" name="chat" id=${chat.chat_id}>
                                         <a>
-                                            <span class="ks-group-amount"><img loading="lazy" onerror="setDefaultImage(this)" style="width: 36px; height: 36px;" class="rounded-circle" src="images/${otherMember['id']}.${otherMember['image_format']}"/></span>
+                                            <span class="ks-group-amount"><img loading="lazy" alt="" onerror="setDefaultImage(this)" style="width: 36px; height: 36px;" class="rounded-circle" src="images/${otherMember['id']}.${otherMember['image_format']}"/></span>
                                             <div class="ks-body">
                                                 <div class="ks-name">
                                                     <p>${otherMember['username']}</p>
@@ -246,7 +241,7 @@
                 `<li class="ks-item" name="chat" id=${chat.id}>
                         <a>
                             <span class="ks-group-amount">
-                                <img loading="lazy" style="width: 36px; height: 36px;" class="rounded-circle" src="{{$home}}{{$nodePort}}/images/group_image.png"/>
+                                <img loading="lazy" alt="" style="width: 36px; height: 36px;" class="rounded-circle" src="{{$home}}{{$nodePort}}/images/group_image.png"/>
                             </span>
                             <div class="ks-body">
                                 <div class="ks-name">

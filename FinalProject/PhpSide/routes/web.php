@@ -21,7 +21,6 @@ Route::get("/auth/register", NewAccountController::class . "@registerPage")->nam
 Route::post("/auth/register", NewAccountController::class . "@register");
 Route::get("/auth/logout", NewAccountController::class . "@logout")->middleware('is_logged');
 
-
 Route::get("/dashboard", function (){
     $data = json_decode(file_get_contents(storage_path() . "/configs.json"), true);
     return view("dashboard", ["home" => $data['address'], "nodePort" => $data['nodePort'], "phpPort" => $data['phpPort'], "route" => "dashboard", "title" => "Dashboard"    ]);
@@ -43,7 +42,7 @@ Route::post('/chat/{id}/message', NewChatController::class . "@newMessage")->nam
 Route::get('/chat/{id}/members', NewChatController::class . "@getMembers")->name('getMembers')->middleware('is_logged');
 Route::get('/chat/{id}', NewChatController::class . "@getChatById")->name('getChatById')->middleware('is_logged');
 Route::post('/chat/create', NewChatController::class . "@create")->name('create')->middleware('is_logged');
-Route::get('/user/{id}', NewAccountController::class . "@getUser")->name('getUser')->middleware('is_logged');
+Route::get('/user/{id}', NewAccountController::class . "@getUser")->name('getUser');
 Route::post('/chat/not-in-private', NewChatController::class . "@notInPrivate")->name('notInPrivate')->middleware('is_logged');
 Route::post('/chat/not-in-private/{username}', NewChatController::class . "@notInPrivate")->name('notInPrivate')->middleware('is_logged');
 Route::post('/group/get-users', NewChatController::class . "@getUsers")->name('getUsers')->middleware('is_logged');
@@ -53,6 +52,8 @@ Route::get('/user/search/{username}', NewAccountController::class . "@search")->
 
 
 
-Route::get('/voice', VoiceController::class . "@index")->name('voice')->middleware('is_logged');
+Route::get('/guilds', VoiceController::class . "@index")->name('voice')->middleware('is_logged');
 Route::get('/voices', VoiceController::class . "@getVoice")->name('getVoice')->middleware('is_logged');
 Route::get('/voices/users-amount/{id}', VoiceController::class . "@getAmount")->name('getAmount')->middleware('is_logged');
+Route::post("/guild/getChannels", VoiceController::class . "@getChannels")->name('getChannels')->middleware('is_logged'); // guild_id on post
+Route::post('/user/have-access/guild/{id}', VoiceController::class . "@haveAccessGuild")->name('haveAccess');

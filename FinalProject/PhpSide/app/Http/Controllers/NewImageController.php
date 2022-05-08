@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Http;
 use Imagick;
 use Intervention\Image\Facades\Image;
 
@@ -32,7 +33,16 @@ class NewImageController extends Controller
         $image = $credentials['imageInput'];
         $imageName = $user->id . "." . $image->getClientOriginalExtension();
         if($image->getClientOriginalExtension() == 'gif'){
+
+            $size = getimagesize($image);
             $image->move("images/" , $imageName);
+
+            $response = Http::acceptJson()->asForm()->post($this->data['address'] . $this->data['nodePort'] . '/gif/resize', [
+                'image_name' => $imageName,
+                'width' => $size[0],
+                'height' => $size[1]
+            ]);
+
         }
         else{
             $img = Image::make($image->path());

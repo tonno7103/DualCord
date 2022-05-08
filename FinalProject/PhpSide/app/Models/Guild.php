@@ -26,6 +26,6 @@ class Guild extends Model
 
     public function voiceChannels()
     {
-        return $this->hasMany('App\Models\VoiceChannel', 'guild_id', 'id');
+        return $this->hasMany('App\Models\VoiceChannels', 'guild_id', 'id');
     }
 }

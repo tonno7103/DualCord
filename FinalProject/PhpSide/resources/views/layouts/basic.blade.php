@@ -1,10 +1,10 @@
+<!DOCTYPE html>
 <script>
    function setDefaultImage(obj){
        obj.error = null;
        obj.src = "{{$home}}{{$nodePort}}/images/profile_image.png";
    }
 </script>
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <link rel="manifest" href="{{$home}}{{$phpPort}}/manifest.json"/>
@@ -13,6 +13,7 @@
         const el = document.createElement('pwa-update');
         document.body.appendChild(el);
     </script>
+    <meta name="description" content="Discord like application">
     <meta name="csrf-token" content="{{ csrf_token() }}">
    <link rel="icon" type="image/x-icon" href="{{$home}}{{$nodePort}}/images/logos/favicon.png">
    <title>@yield('title')</title>
@@ -46,7 +47,7 @@
                        <i class='bx bx-message-square-detail nav_icon'></i>
                        <span class="nav_name">Messages</span>
                    </a>
-                   <a href="{{$home . $phpPort}}/voice" class="nav_link @if($route == 'voice') active @endif" data-toggle="tooltip" data-placement="right" title="Voice Guilds">
+                   <a href="{{$home . $phpPort}}/guilds" class="nav_link @if($route == 'voice') active @endif" data-toggle="tooltip" data-placement="right" title="Voice Guilds">
                        <i class='bx bxs-user-voice nav_icon'></i>
                        <span class="nav_name">Voice Guilds</span>
                    </a>

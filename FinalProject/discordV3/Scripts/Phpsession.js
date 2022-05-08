@@ -20,7 +20,7 @@ function getData(name, request){
         }
 
         const connection = new Memcached('localhost:11211');
-        console.log("Fetching for key: ", key);
+        console.log("[PHPSESSION.JS] Fetching for key: ", key);
         connection.get(key, (err, data) =>{
             if(err) reject(console.error("Error: ", err));
             if(data === false || data === undefined) reject(console.log("No data found"));
