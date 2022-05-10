@@ -3,7 +3,6 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "memcached": "memcached -d",
     "start": "nodemon ./bin/www"
   },
   "dependencies": {
@@ -28,15 +27,17 @@
     "http-errors": "~1.6.3",
     "http-proxy-middleware": "^2.0.4",
     "i": "^0.3.7",
+    "install": "^0.13.0",
     "memcached": "^2.2.2",
     "morgan": "~1.9.1",
     "mysql": "^2.18.1",
     "node-laravel-session": "^2.0.1",
     "node-php": "^0.0.1",
-    "npm": "^8.7.0",
+    "npm": "^8.9.0",
     "peer": "^0.6.1",
     "php-unserialize": "^0.0.1",
     "pwa-asset-generator": "^6.0.8",
+    "simple-peer": "^9.11.1",
     "socket.io": "^4.5.0",
     "url": "^0.11.0"
   }

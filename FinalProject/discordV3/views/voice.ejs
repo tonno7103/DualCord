@@ -1,0 +1,71 @@
+<% extend('mainLayout/voiceMain.ejs') %>
+<script src="https://cdn.tailwindcss.com"></script>
+
+<link rel="stylesheet" href="<%= home %><%= nodePort %>/stylesheets/guild.css">
+<div class="flex">
+  <div class="flex-1 flex flex-col min-h-screen h-screen">
+    <div class="flex-1 flex overflow-y-hidden">
+      <div class="bg-gray-800 w-56 flex-none flex flex-col justify-between">
+        <div class="hashtag-bar text-sm leading-relaxed overflow-y-auto">
+          <ul class="px-2 pt-20" id="channels"></ul>
+        </div>
+        <div class="bg-gray-850 px-3 py-2 flex items-center justify-between">
+          <div class="flex items-center">
+            <a href="#">
+              <img alt="avatar" src="<%= home %><%= phpPort %>/images/<%= user_id %>.<%= user_image_format %>" onerror="setDefaultImage(this)" id="profile" class="w-8 h-8 rounded-full">
+            </a>
+            <div class="text-xs ml-2">
+              <div class="text-white" id="profile-name"><%= user_username %></div>
+            </div>
+          </div>
+          <div class="flex items-center text-gray-500">
+            <a id="mute">
+              <i id="muteButton" class='bx bxs-microphone-off'></i>
+            </a>
+            <a href="#" class="ml-3 hover:text-white">
+              <svg class="w-5 h-5" fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" opacity=".1" fill="none"></path><path d="M12 1c-4.97 0-9 4.03-9 9v7c0 1.66 1.34 3 3 3h3v-8H5v-2c0-3.87 3.13-7 7-7s7 3.13 7 7v2h-4v8h3c1.66 0 3-1.34 3-3v-7c0-4.97-4.03-9-9-9z"></path></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="flex-1 flex justify-between">
+        <div class="flex-1 flex flex-col justify-between" style="background-color: black; width: 80vw;">
+          <div class="p-4 shadow-md sm:p-8 dark:bg-black-800 dark:border-black-700 overflow-y-scroll" style="width: 100%; height: 100%;">
+             <div class="flow-root">
+               <h1 style="color: white; font-size: 30px">Users in your room:</h1>
+                  <div id="users">
+                   <div class="flow-root">
+                        <ul class="divide-y divide-gray-200 dark:divide-gray-700" id="users">
+                            <li class="py-3 sm:py-4 margin">
+                                <div class="flex items-center space-x-4">
+                                    <div class="flex-shrink-0">
+                                        <img class="w-8 h-8 rounded-full" src="<%= home %><%= phpPort %>/images/<%= user_id %>.<%= user_image_format %>" alt="Neil image">
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
+                                            <%= user_username %>
+                                        </p>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                   </div>
+                </div>
+             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  const user_id = <%= user_id %>;
+  const guild_id = <%= guild_id %>;
+  const home = '<%= home %>';
+  const nodePort = '<%= nodePort %>';
+  const phpPort = '<%= phpPort %>';
+  const voice_id = <%= voice_id %>;
+  const socket = io('<%= home %><%= nodePort %>');
+</script>
+<script src="<%=home%><%=nodePort%>/javascripts/voice.js"></script>

@@ -1,11 +1,11 @@
+<!DOCTYPE html>
 <script>
    function setDefaultImage(obj){
        obj.error = null;
        obj.src = "<%= home %><%= nodePort %>/images/profile_image.png";
    }
 </script>
-<!DOCTYPE html>
-<html lang="en" style="height: 100%">
+<html lang="en" style="height: 100%" class="dark">
 <head>
     <link rel="manifest" href="<%= home %><% phpPort %>/manifest.json"/>
     <script type="module">
@@ -53,7 +53,7 @@
            </div> <a href="<%= home %><%= phpPort %>/auth/logout" class="nav_link"> <i class='bx bx-log-out nav_icon'></i> <span class="nav_name">SignOut</span> </a>
        </nav>
    </div>
-   <div class="bg-light bg-transparent">
+   <div class="bg-transparent">
        <%- content %>
    </div>
 

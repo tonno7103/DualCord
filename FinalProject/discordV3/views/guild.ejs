@@ -1,6 +1,6 @@
 <% extend('mainLayout/voiceMain.ejs') %>
-<script src="https://unpkg.com/peerjs@1.3.2/dist/peerjs.min.js"></script>
 <script src="https://cdn.tailwindcss.com"></script>
+
 <link rel="stylesheet" href="<%= home %><%= nodePort %>/stylesheets/guild.css">
 <div class="flex">
   <div class="flex-1 flex flex-col min-h-screen h-screen">
@@ -19,8 +19,8 @@
             </div>
           </div>
           <div class="flex items-center text-gray-500">
-            <a href="#">
-              <svg class="w-5 h-5" fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 14c1.66 0 2.99-1.34 2.99-3L15 5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg>
+            <a id="muteButton">
+              <i class='bx bxs-microphone'></i>
             </a>
             <a href="#" class="ml-3 hover:text-white">
               <svg class="w-5 h-5" fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" opacity=".1" fill="none"></path><path d="M12 1c-4.97 0-9 4.03-9 9v7c0 1.66 1.34 3 3 3h3v-8H5v-2c0-3.87 3.13-7 7-7s7 3.13 7 7v2h-4v8h3c1.66 0 3-1.34 3-3v-7c0-4.97-4.03-9-9-9z"></path></svg>
@@ -32,7 +32,8 @@
         <div class="flex-1 flex flex-col justify-between" style="background-color: black; width: 80vw;">
           <div class="p-4 shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700 overflow-y-scroll" style="width: 100%; height: 100%;">
              <div class="flow-root">
-                  <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700" id="users"></ul>
+                  <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700" id="users">
+                  </ul>
              </div>
           </div>
         </div>
@@ -49,6 +50,5 @@
   const phpPort = '<%= phpPort %>';
   const socket = io();
 
-
 </script>
-<script src="<%= home %><%= nodePort %>/javascripts/VoiceChannels.js"></script>
+<script src="<%= home %><%= nodePort %>/javascripts/Guild.js"></script>

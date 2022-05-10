@@ -56,4 +56,5 @@ Route::get('/guilds', VoiceController::class . "@index")->name('voice')->middlew
 Route::get('/voices', VoiceController::class . "@getVoice")->name('getVoice')->middleware('is_logged');
 Route::get('/voices/users-amount/{id}', VoiceController::class . "@getAmount")->name('getAmount')->middleware('is_logged');
 Route::post("/guild/getChannels", VoiceController::class . "@getChannels")->name('getChannels')->middleware('is_logged'); // guild_id on post
-Route::post('/user/have-access/guild/{id}', VoiceController::class . "@haveAccessGuild")->name('haveAccess');
+Route::post('/user/have-access/guild/{id}', VoiceController::class . "@haveAccessGuild")->name('haveAccessGuild');
+Route::post('/user/have-access/voice/{id}', VoiceController::class . "@haveAccessVoice")->name('haveAccessVoice');
