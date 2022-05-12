@@ -132,17 +132,17 @@ class NewChatController extends Controller
     public function notInPrivate(Request $request, $username){
         $user = Auth::id();
         return DB::select(
-            "SELECT * FROM users
-             WHERE username LIKE '%$username%' AND id IN(
-                SELECT id from users
-                WHERE id NOT IN (
-                    SELECT user_id FROM chatting_client
+            "SELECT *
+                from users
+                WHERE username LIKE '%$username%' AND id NOT IN (
+                    SELECT user_id
+                    FROM chatting_client
                     WHERE chat_id IN (
-                        SELECT chat_id FROM chatting_client
+                        SELECT chat_id
+                        FROM chatting_client
                         WHERE user_id = $user
                     )
-                )
-            )"
+                ) AND id != $user;"
         );
     }
 

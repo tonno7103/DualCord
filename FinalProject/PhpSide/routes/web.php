@@ -13,8 +13,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function (){
     $data = json_decode(file_get_contents(storage_path() . "/configs.json"), true);
-    return redirect($data['address'] . $data['phpPort'] . '/dashboard');
-});
+    return redirect($data['address'] . $data['nodePort']);
+})->name('home');
+
+
 Route::get("/auth/login", NewAccountController::class . "@loginPage")->name("login");
 Route::post("/auth/login", NewAccountController::class . "@login");
 Route::get("/auth/register", NewAccountController::class . "@registerPage")->name("register");
@@ -35,7 +37,8 @@ Route::post("/user/edit", newImageController::class . "@edit")->middleware('is_l
 Route::get('/chat', NewChatController::class . "@index")->name('chat')->middleware('is_logged');
 Route::get("/chats", NewChatController::class . "@chats")->name("chat")->middleware('is_logged');
 Route::get("/group/create", NewChatController::class . "@createGroupPage")->middleware('is_logged');
-
+Route::post("/guild/create", VoiceController::class . "@createGuild")->middleware('is_logged');
+Route::post('/guild/createNewChannel', VoiceController::class . "@createNewChannel")->middleware('is_logged');
 
 Route::get('/chat/{id}/messages', NewChatController::class . "@messages")->name('messages')->middleware('is_logged');
 Route::post('/chat/{id}/message', NewChatController::class . "@newMessage")->name('newMessage')->middleware('is_logged');
@@ -58,3 +61,9 @@ Route::get('/voices/users-amount/{id}', VoiceController::class . "@getAmount")->
 Route::post("/guild/getChannels", VoiceController::class . "@getChannels")->name('getChannels')->middleware('is_logged'); // guild_id on post
 Route::post('/user/have-access/guild/{id}', VoiceController::class . "@haveAccessGuild")->name('haveAccessGuild');
 Route::post('/user/have-access/voice/{id}', VoiceController::class . "@haveAccessVoice")->name('haveAccessVoice');
+Route::post("/guild/getLevel/{guild_id}", VoiceController::class . "@getLevel")->name('getLevel');
+
+
+// invite system
+Route::get("/g/invite/{uuid}", VoiceController::class . "@invite")->name('invite')->middleware('is_logged');
+Route::post('/guild/invite/get-invite', VoiceController::class . "@getInviteCode")->name('getInviteCode')->middleware('is_logged'); // guild_id on post

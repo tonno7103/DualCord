@@ -24,16 +24,32 @@ router.get('/guild/:id', (req, res) => {
                 axios.post(`${address}${phpPort}/user/have-access/guild/` + id, {'user_id': data})
                     .then(response => {
                         if(response.data.access){
-                            return res.render('guild', {
-                                title: 'Guild',
-                                home: address,
-                                nodePort,
-                                phpPort,
-                                guild_id: id,
-                                user_id: data,
-                                user_image_format: user.image_format,
-                                user_username: user.username,
-                            });
+                            getLevel(data, id).then(powerLevel => {
+                                console.log("[VOICE.JS] Result of scanning for owner:", powerLevel);
+                                return res.render('guild', {
+                                    title: 'Guild',
+                                    home: address,
+                                    nodePort,
+                                    phpPort,
+                                    guild_id: id,
+                                    user_id: data,
+                                    level: powerLevel,
+                                    user_image_format: user.image_format,
+                                    user_username: user.username,
+                                });
+                            }).catch(() =>{
+                                return res.render('guild', {
+                                    title: 'Guild',
+                                    home: address,
+                                    nodePort,
+                                    phpPort,
+                                    guild_id: id,
+                                    user_id: data,
+                                    owner: -1,
+                                    user_image_format: user.image_format,
+                                    user_username: user.username,
+                                });
+                            })
                         }
                         else{
                             return res.redirect(`${address}${nodePort}/guilds`);
@@ -63,17 +79,34 @@ router.get('/guild/:guild_id/voice/:voice_id', async (req, res) => {
                 haveAccess(data, voice_id).then(access => {
                     console.log("[VOICE.JS] Result of access:", access);
                     if(access){
-                       return res.render('voice', {
-                           title: 'Voice',
-                           home: address,
-                           nodePort,
-                           phpPort,
-                           guild_id,
-                           voice_id,
-                           user_id: data,
-                           user_image_format: user.image_format,
-                           user_username: user.username,
-                       });
+                        getLevel(data, guild_id).then(powerLevel => {
+                            console.log("[VOICE.JS] Result of scanning for owner:", powerLevel);
+                            return res.render('voice', {
+                                title: 'Voice',
+                                home: address,
+                                nodePort,
+                                phpPort,
+                                guild_id: guild_id,
+                                voice_id: voice_id,
+                                user_id: data,
+                                level: powerLevel,
+                                user_image_format: user.image_format,
+                                user_username: user.username,
+                            });
+                        }).catch(() =>{
+                            return res.render('voice', {
+                                title: 'Voice',
+                                home: address,
+                                nodePort,
+                                phpPort,
+                                guild_id: guild_id,
+                                voice_id: voice_id,
+                                user_id: data,
+                                owner: -1,
+                                user_image_format: user.image_format,
+                                user_username: user.username,
+                            });
+                        });
                     } else{
                         return res.redirect(`${address}${nodePort}/guild/${guild_id}`);
                     }
@@ -85,11 +118,16 @@ router.get('/guild/:guild_id/voice/:voice_id', async (req, res) => {
         });
 });
 
+
+
+
 function getUser(user_id){
     return new Promise((resolve, reject) =>{
         axios.get(`${address}${phpPort}/user/${user_id}`).then(response => {
             resolve(response.data);
-        })
+        }).catch(error => {
+            reject(error);
+        });
     });
 }
 function haveAccess(user_id, voice_id){
@@ -99,7 +137,23 @@ function haveAccess(user_id, voice_id){
         })
         .then(response => {
             resolve(response.data.access);
+        }).catch(error => {
+            reject(error);
         });
     });
 }
+function getLevel(user_id, guild_id){
+    return new Promise((resolve, reject) =>{
+        axios.post(`${address}${phpPort}/guild/getLevel/` + guild_id, {
+            'user_id': user_id,
+        })
+        .then(response => {
+            resolve(response.data.level);
+        }).catch(() => {
+            reject();
+        });
+    });
+
+}
+
 module.exports = router;

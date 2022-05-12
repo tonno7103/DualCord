@@ -13,6 +13,8 @@
         const el = document.createElement('pwa-update');
         document.body.appendChild(el);
     </script>
+    <meta name="theme-color" content="#317EFB">
+    <link rel="apple-touch-icon" href="{{$home}}{{$phpPort}}/images/pwa/icons/apple-icon-180.png">
     <meta name="description" content="Discord like application">
     <meta name="csrf-token" content="{{ csrf_token() }}">
    <link rel="icon" type="image/x-icon" href="{{$home}}{{$nodePort}}/images/logos/favicon.png">

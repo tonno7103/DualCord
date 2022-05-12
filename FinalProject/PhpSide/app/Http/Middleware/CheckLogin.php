@@ -24,7 +24,7 @@
         {
             $user = Auth::user();
             if(!$user){
-                return redirect($this->data['address']. $this->data['phpPort'] . '/auth/login');
+                return redirect($this->data['address']. $this->data['nodePort']);
             }
             return $next($request);
         }

@@ -7,6 +7,10 @@
 
     let peers = {};
 
+    socket.on('channel-created', (data)=>{
+        console.log('Channel created', data);
+        createChannel(data);
+    });
 
     setup_local_media(function() {
         socket.emit("voice-connect", {

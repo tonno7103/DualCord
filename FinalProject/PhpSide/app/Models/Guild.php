@@ -11,7 +11,7 @@ class Guild extends Model
 
     protected $table = 'guilds';
     protected $primaryKey = 'id';
-    protected $fillable = ['name', 'owner_id'];
+    protected $fillable = ['name', 'owner_id', 'invite_code'];
     public $timestamps = false;
 
     public function users()

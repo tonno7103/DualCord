@@ -1,14 +1,9 @@
 const express = require('express');
 const path = require('path');
 const proxy = require('express-http-proxy');
-const {phpPort} = require('./utils/path.json')
 const { Server } = require("socket.io");
-const { ExpressPeerServer } = require('peer');
 const app = express();
 const http = require('http').Server(app);
-const peerServer = ExpressPeerServer(http, {
-  debug: true
-});
 const loader = require("./Scripts/loader");
 loader.loadCommands();
 loader.loadBluePrints(app);
@@ -21,7 +16,6 @@ app.set('view engine', 'ejs');
 
 app.use("/l", proxy(`127.0.0.1:8081`, {}));
 
-app.use('/peerjs', peerServer);
 app.use(express.static(path.join(__dirname, 'public')));
 
 http.listen(8080, ()=>{
@@ -59,6 +53,7 @@ io.on('connection', (socket) => {
     }
 
     socket.join("voice-" + data.channel_id);
+    socket.join('guild-' + data.guild_id);
     socket.channel_id = data.channel_id;
     socket.user_id = data.user_id;
 
@@ -129,6 +124,12 @@ io.on('connection', (socket) => {
       }
     });
     socket.leave(socket.user_id);
+  });
+
+
+
+  socket.on('create-channel', (data) => {
+    io.to('guild-' + data.guild_id).emit('channel-created', data);
   });
 
   socket.on('disconnecting', () => {

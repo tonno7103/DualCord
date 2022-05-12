@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <link rel="manifest" href="<%= home%><%= phpPort%>/manifest.json" />
+    <meta name="theme-color" content="#317EFB">
+    <link rel="apple-touch-icon" href="<%=home%><%=phpPort%>/images/pwa/icons/apple-icon-180.png">
+    <link rel="manifest" href="<%=home%><%=phpPort%>/manifest.json" />
     <script type="module">
       import 'https://cdn.jsdelivr.net/npm/@pwabuilder/pwaupdate';
       const el = document.createElement('pwa-update');

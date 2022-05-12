@@ -19,7 +19,7 @@ class Auth
         $data = json_decode(file_get_contents(storage_path() . "/configs.json"), true);
         // use auth to check if user is logged in
         if (!auth()->check()) {
-            return redirect($data['address'] . $data['phpPort'] . '/auth/login');
+            return redirect($data['address'] . $data['nodePort']);
         }
         return $next($request);
     }
