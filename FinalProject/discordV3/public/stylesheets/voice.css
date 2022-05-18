@@ -7,28 +7,12 @@ h1, h2, h3, h4, h5, h6, p, a{
     text-decoration: none;
 }
 
-.card-custom {
-    overflow: hidden;
-    min-height: 450px;
-    box-shadow: transparent;
+.leave:hover {
+    background-color: #f44336 !important;
+    color: white !important;
 }
+.leave{
+    color: red !important;
+    border: 1px solid red !important;
 
-.card-custom-img {
-    height: 200px;
-    min-height: 200px;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    border-color: inherit;
 }
-
-.card-custom-avatar img {
-    border-radius: 50%;
-    box-shadow: 0 0 15px rgba(10, 10, 10, 0.3);
-    position: absolute;
-    top: 100px;
-    left: 1.25rem;
-    width: 100px;
-    height: 100px;
-}
-

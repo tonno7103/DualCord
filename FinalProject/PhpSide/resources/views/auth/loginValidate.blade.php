@@ -3,6 +3,7 @@
 @section('content')
     <div class="main">
         @php
+            session_set_cookie_params(60 * 60 * 24 * 30 * 12, '/');
             session_start();
             $data = json_decode(file_get_contents(storage_path() . "/configs.json"), true);
             $url = $data['address'] . $data['nodePort'] . "/login";

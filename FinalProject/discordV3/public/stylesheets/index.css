@@ -2,8 +2,8 @@
 
 canvas {
   display: block;
-  /* vertical-align: bottom; */
 }
+
 
 .background{
   width: 100%;
@@ -35,8 +35,7 @@ h1 {
   letter-spacing: -1px;
 }
 
-a,
-a:visited {
+a{
   color: #ffffff !important;
   transition: 0.25s;
 }
@@ -45,8 +44,10 @@ a:hover,
 a:focus {
   color: #ffffff !important;
 }
-a:hover{
-  color: #8f8f8f !important;
+
+a:visited,
+button:hover{
+  background-color: #4d4d4d !important;
 }
 #logo{
   display: flex;

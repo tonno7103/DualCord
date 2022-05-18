@@ -37,10 +37,6 @@
        <nav class="nav">
            <div> <a href="{{$home . $nodePort}}" class="nav_logo"><i class='bx bx-layer nav_logo-icon'></i> <span class="nav_logo-name">DualCord</span> </a>
                <div class="nav_list">
-                   <a href="{{$home . $phpPort}}/dashboard" class="nav_link @if($route == 'dashboard') active @endif" data-toggle="tooltip" data-placement="right" title="Dashboard">
-                       <i class='bx bx-grid-alt nav_icon'></i>
-                       <span class="nav_name" >Dashboard</span>
-                   </a>
                    <a href="{{$home . $phpPort}}/user/edit" class="nav_link @if($route == 'edit') active @endif" data-toggle="tooltip" data-placement="right" title="Users">
                        <i class='bx bx-user nav_icon'></i>
                        <span class="nav_name">Users</span>

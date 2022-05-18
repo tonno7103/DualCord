@@ -10,7 +10,7 @@ class Role extends Model
 {
     use HasFactory;
     protected $table = 'role';
-    protected $fillable = ['user_id', 'guild_id', 'name', 'permission_level'];
+    protected $fillable = ['user_id', 'guild_id', 'name', 'permission_level', 'is_banned', 'is_left'];
     protected $primaryKey = ['user_id', 'guild_id'];
     public $incrementing = false;
     public $timestamps = false;

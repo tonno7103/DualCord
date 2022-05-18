@@ -1,6 +1,16 @@
 (()=>{
 
+  document.getElementById('mute').addEventListener('click', () => {
+      if(document.getElementById('muteButton').classList.contains('bxs-microphone-off')) {
+        document.getElementById('muteButton').classList.replace('bxs-microphone-off', 'bxs-microphone');
+      } else {
+        document.getElementById('muteButton').classList.replace('bxs-microphone', 'bxs-microphone-off');
+      }
+  });
+
+
   document.getElementById('share-button').addEventListener('click', ()=>{
+    document.getElementById('copy-share-link').innerText = 'Copy';
     fetch(`${home}${phpPort}/guild/invite/get-invite`, {
       method: 'POST',
       headers: {

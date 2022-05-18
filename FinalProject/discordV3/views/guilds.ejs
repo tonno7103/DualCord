@@ -3,9 +3,8 @@
 <link rel="stylesheet" href="https://unpkg.com/flowbite@1.4.5/dist/flowbite.min.css" />
 <script src="https://unpkg.com/flowbite@1.4.5/dist/flowbite.js"></script>
 
-<div style="padding-top: 30px" class="container">
-      <div class="container pt-6">
-      <button class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button" data-modal-toggle="createGuilds-modal">
+<div class="container">
+      <button class="mt-5 block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button" data-modal-toggle="createGuilds-modal">
         <i class='bx bxs-plus-circle' ></i> Create guild
       </button>
       <div id="createGuilds-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
@@ -27,7 +26,7 @@
               </div>
           </div>
       </div>
-        <div class="row pt-5 m-auto" id="cards"></div>
+       <div class="row pt-5" id="cards"></div>
       </div>
 </div>
 
@@ -35,35 +34,59 @@
   (()=>{
 
     createGuilds();
-
-    async function createGuilds(){
+    function createGuilds(){
       getGuilds().then(roles=>{
         for (const role of roles) {
           getAmountUsers(role.guild_id).then((guildMembers) =>{
             $('#cards').append(`
-            <div class="col-md-6 col-lg-4 pb-3" style="background: var(--first-color); margin-left: 10px">
-
-            <div class="card card-custom bg-transparent border-transparent border-0">
-              <div class="card-custom-img"></div>
-              <div class="card-custom-avatar">
-                <img class="img-fluid" src="<%= home %><%= nodePort %>/images/guilds.png" alt="Avatar" />
-              </div>
-              <div class="card-body" style="overflow-y: auto">
-                <p class="card-title" style="font-size: 25px">${role.guild.name}</p>
-              </div>
-              <div class="card-footer" style="background: inherit; border-color: inherit;display: flex;flex-wrap: wrap; justify-content: center;">
-                <a href="<%= home %><%= nodePort %>/guild/${role.guild_id}" class="btn btn-primary shadow-none" style="width: 100px;">Connect</a>
-                <a href="" class="btn btn-danger shadow-none" style="width: 100px">Leave</a>
-                <a href="" class="btn btn-primary disabled shadow-none" style="float: right; width: 100%; margin-top: 10px">Members: ${guildMembers.amount}</a>
-              </div>
+            <div style="margin-top: 1rem; margin-right: 1rem" class="max-w-sm e rounded-lg border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+                <div class="flex justify-end px-4 pt-4">
+                    <!-- Dropdown menu -->
+                    <div id="dropdown" class="hidden z-10 w-44 text-base list-none rounded divide-y divide-gray-100 shadow dark:bg-gray-700">
+                        <ul class="py-1" aria-labelledby="dropdownButton">
+                        <li>
+                            <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Edit</a>
+                        </li>
+                        <li>
+                            <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Export Data</a>
+                        </li>
+                        <li>
+                            <a href="#" class="block py-2 px-4 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Delete</a>
+                        </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="flex flex-col items-center pb-10">
+                    <img class="mb-3 w-24 h-24 rounded-full shadow-lg" src="<%= home %><%= nodePort %>/images/guilds.png" alt="${role.guild.name}"/>
+                    <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">${role.guild.name}</h5>
+                    <span class="text-sm text-gray-500 dark:text-gray-400">Members: ${guildMembers.amount}</span>
+                    <div class="flex mt-4 space-x-3 lg:mt-6">
+                        <a href="<%= home %><%= nodePort %>/guild/${role.guild_id}" class="inline-flex items-center py-2 px-4 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Connect</a>
+                        <a name="leave-guild-${role.guild_id}" class="inline-flex items-center py-2 px-4 text-sm font-medium text-center rounded-lg border-gray-300 hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:bg-gray-800 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-700 dark:focus:ring-gray-700 leave">Leave</a>
+                    </div>
+                </div>
             </div>
-          </div>
             `);
+            $('[name="leave-guild-'+role.guild_id+'"]').click(()=>{
+              leaveGuild(role.guild_id);
+            });
           });
         }
       })
     }
 
+
+    function leaveGuild(guild_id){
+        fetch(`<%= home %><%= phpPort %>/guild/leave/${guild_id}`, {
+            method: 'GET',
+        }).then(res => res.json()).then(data => {
+            if(data.success){
+                $('#cards').empty();
+                createGuilds();
+                console.log(data);
+            }
+        });
+    }
     function getGuilds(){
       return new Promise((resolve, reject) =>{
         fetch('<%= home %><%= phpPort %>/voices', {

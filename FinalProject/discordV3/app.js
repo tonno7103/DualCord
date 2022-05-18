@@ -52,6 +52,7 @@ io.on('connection', (socket) => {
       socket.emit('addPeer', {'peer_id': id, 'should_create_offer': true});
     }
 
+    socket.join('user-' + data.user_id)
     socket.join("voice-" + data.channel_id);
     socket.join('guild-' + data.guild_id);
     socket.channel_id = data.channel_id;
@@ -106,6 +107,8 @@ io.on('connection', (socket) => {
   socket.on('guild-connect', (data) => {
     socket.user_id = data.user_id;
     socket.guild_id = data.guild_id;
+    socket.join('user-' + data.user_id);
+
 
     socket.join("guild-" + data.guild_id);
     console.log(`[Socket] user: ${data.user_id} joined to guild: ${data.guild_id}`);
@@ -141,6 +144,16 @@ io.on('connection', (socket) => {
       part(channel);
     }
     delete sockets[socket.id];
+  });
+
+  socket.on('kick', (data) => {
+    console.log('[Socket] kick');
+    io.to("user-" + data.user_id).emit('receiver-kick');
+  });
+
+  socket.on('ban', (data) => {
+    console.log('[Socket] ban');
+    io.to("user-" + data.user_id).emit('receiver-ban');
   });
 });
 

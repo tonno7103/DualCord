@@ -67,3 +67,14 @@ Route::post("/guild/getLevel/{guild_id}", VoiceController::class . "@getLevel")-
 // invite system
 Route::get("/g/invite/{uuid}", VoiceController::class . "@invite")->name('invite')->middleware('is_logged');
 Route::post('/guild/invite/get-invite', VoiceController::class . "@getInviteCode")->name('getInviteCode')->middleware('is_logged'); // guild_id on post
+
+// leave system
+Route::get('/guild/leave/{guild_id}', VoiceController::class . "@leaveGuild")->name('leaveGuild')->middleware('is_logged');
+
+// kick and ban system
+Route::get('/guild/getLowerPower/{guild_id}', VoiceController::class . "@getLowerLevelMembers")->name('getLowerLevelMembers')->middleware('is_logged');
+Route::get('/guild/getUsersLowerLevel/{guild_id}/{username}', VoiceController::class . '@getUsersLowerLevel')->name('getUsersLowerLevel')->middleware('is_logged');
+Route::get('/guild/getBannedUsers/{guild_id}', VoiceController::class . '@getBannedUsers')->name('getBannedUsers')->middleware('is_logged');
+
+Route::get('/guild/banUser/{guild_id}/{target_id}', VoiceController::class . "@banUser")->name('banUser')->middleware('is_logged');
+Route::get('/guild/kickUser/{guild_id}/{target_id}', VoiceController::class . "@kickUser")->name('kickUser')->middleware('is_logged');

@@ -7,6 +7,33 @@
 
     let peers = {};
 
+    document.getElementById('share-button').addEventListener('click', ()=>{
+        document.getElementById('copy-share-link').innerText = 'Copy';
+        fetch(`${home}${phpPort}/guild/invite/get-invite`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                guild_id: guild_id
+            })
+        }).then(res => res.json()).then(data => {
+            if(data.success){
+                document.getElementById('invite-link').value = `${home}${phpPort}/g/invite/${data.invite_code}`;
+            }
+            else{
+                document.getElementById('invite-link').value = data.invite_code;
+            }
+        });
+    });
+
+    document.getElementById('copy-share-link').addEventListener('click', ()=>{
+        const copy = document.getElementById('invite-link').value
+        navigator.clipboard.writeText(copy).then(() => {
+            document.getElementById('copy-share-link').innerText = 'Copied!';
+        })
+    });
+
     socket.on('channel-created', (data)=>{
         console.log('Channel created', data);
         createChannel(data);

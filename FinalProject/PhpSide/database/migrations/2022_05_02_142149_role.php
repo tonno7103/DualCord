@@ -23,6 +23,8 @@ return new class extends Migration
             $table->string('name');
             $table->integer('permission_level');
             $table->primary(['user_id', 'guild_id']);
+            $table->boolean('is_banned')->default(false);
+            $table->boolean('is_left')->default(false);
         });
     }
 

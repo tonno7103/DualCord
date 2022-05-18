@@ -53,7 +53,6 @@
                         <input type="text"  style="width: 200%" id="text-message" class="form-control shadow-none" placeholder="Type something...">
                         <div class="ks-controls">
                             <button class="btn btn-primary" id="send">Send</button>
-                            <a href="#" class="la la-paperclip ks-attachment"></a>
                         </div>
                     </div>
                 </div>
@@ -64,6 +63,7 @@
 <script>
 
     (()=>{
+
         let currentChat = undefined;
         let oldHeight = $('#messages').height();
         let running = false;

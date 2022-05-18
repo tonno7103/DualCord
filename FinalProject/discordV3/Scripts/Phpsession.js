@@ -1,11 +1,11 @@
-const Cookies = require("cookies");
+require("cookies");
 const Memcached = require("memcached");
 
 /**
  * 
  * @param {String} name 
  * @param {Request} request 
- * get the memcached datas using a key
+ * get the memcached data using a key
  * 
  * @returns {JSON | String} 
  */
@@ -32,7 +32,7 @@ function getData(name, request){
 async function writeData(key, value){
     return new Promise((resolve, reject) => {
         const connection = new Memcached('localhost:11211');
-        connection.set(key, value, 10000, (err, data) =>{
+        connection.set(key, value, 100000, (err, data) =>{
             if(err) reject(console.error("Error: ", err));
             resolve(data);
         })
