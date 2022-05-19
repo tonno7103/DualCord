@@ -155,6 +155,7 @@ io.on('connection', (socket) => {
     console.log('[Socket] ban');
     io.to("user-" + data.user_id).emit('receiver-ban');
   });
+
 });
 
 

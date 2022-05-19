@@ -28,9 +28,13 @@ class VoiceController extends Controller
             ->with('guild')
             ->get();
     }
+
     public function getAmount($guild)
     {
-        return DB::select('SELECT COUNT(*) as amount FROM role WHERE guild_id = ?', [$guild])[0];
+        return Role::where('is_banned', false)
+            ->where('is_left', false)
+            ->where('guild_id', $guild)
+            ->count();
     }
 
     public function haveAccessGuild(Request $request, $id): JsonResponse
@@ -198,6 +202,51 @@ class VoiceController extends Controller
             $target_role = Role::where('user_id', $target_id)->where('guild_id', $guild_id)->first();
             if ($target_role && $target_role->permission_level < $role->permission_level) {
                 DB::update('UPDATE role SET is_banned = true WHERE user_id = ? AND guild_id = ?', [$target_id, $guild_id]);
+                return response()->json(['success' => true]);
+            }
+        }
+        return response()->json(['success' => false]);
+    }
+
+    public function getBannedUsers(Request $request, $guild_id): JsonResponse{
+        $guild = Guild::find($guild_id);
+        $role = Role::where('user_id', Auth::id())->where('guild_id', $guild_id)->first();
+        if ($guild && $role && $role->permission_level >= 2) {
+            $users = DB::select('
+                SELECT username, image_format, user_id FROM role
+                    INNER JOIN users ON role.user_id = users.id
+                WHERE guild_id = ? AND is_banned = true
+                LIMIT 10',
+                [$guild_id]
+            );
+            return response()->json(['success' => true, 'users' => $users]);
+        }
+        return response()->json(['success' => false]);
+    }
+
+    public function getUsersLowerLevelBanned(Request $request, $guild_id, $username):JsonResponse {
+        $guild = Guild::find($guild_id);
+        $role = Role::where('user_id', Auth::id())->where('guild_id', $guild_id)->first();
+        if ($guild && $role && $role->permission_level >= 2) {
+            $users = DB::select('
+                SELECT username, image_format, user_id FROM role
+                    INNER JOIN users ON role.user_id = users.id
+                WHERE guild_id = ? AND permission_level < ? AND is_banned = true AND is_left = false AND username LIKE ?
+                LIMIT 10',
+                [$guild_id, $role->permission_level, '%'.$username.'%']
+            );
+            return response()->json(['success' => true, 'users' => $users]);
+        }
+        return response()->json(['success' => false]);
+    }
+
+    public function unbanUser(Request $request, $guild_id, $target_id): JsonResponse{
+        $guild = Guild::find($guild_id);
+        $role = Role::where('user_id', Auth::id())->where('guild_id', $guild_id)->first();
+        if ($guild && $role && $role->permission_level >= 2) {
+            $target_role = Role::where('user_id', $target_id)->where('guild_id', $guild_id)->first();
+            if ($target_role && $target_role->permission_level < $role->permission_level) {
+                DB::update('UPDATE role SET is_banned = false WHERE user_id = ? AND guild_id = ?', [$target_id, $guild_id]);
                 return response()->json(['success' => true]);
             }
         }

@@ -75,6 +75,8 @@ Route::get('/guild/leave/{guild_id}', VoiceController::class . "@leaveGuild")->n
 Route::get('/guild/getLowerPower/{guild_id}', VoiceController::class . "@getLowerLevelMembers")->name('getLowerLevelMembers')->middleware('is_logged');
 Route::get('/guild/getUsersLowerLevel/{guild_id}/{username}', VoiceController::class . '@getUsersLowerLevel')->name('getUsersLowerLevel')->middleware('is_logged');
 Route::get('/guild/getBannedUsers/{guild_id}', VoiceController::class . '@getBannedUsers')->name('getBannedUsers')->middleware('is_logged');
+Route::get('/guild/getUsersLowerLevelBanned/{guild_id}/{username}', VoiceController::class . '@getUsersLowerLevelBanned')->name('getUsersLowerLevelBanned')->middleware('is_logged');
 
 Route::get('/guild/banUser/{guild_id}/{target_id}', VoiceController::class . "@banUser")->name('banUser')->middleware('is_logged');
 Route::get('/guild/kickUser/{guild_id}/{target_id}', VoiceController::class . "@kickUser")->name('kickUser')->middleware('is_logged');
+Route::get('/guild/unbanUser/{guild_id}/{target_id}', VoiceController::class . "@unbanUser")->name('unbanUser')->middleware('is_logged');

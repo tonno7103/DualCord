@@ -45,6 +45,12 @@
             user_id: user_id,
             guild_id: guild_id,
         });
+    },  function() {
+            socket.emit("voice-connect", {
+                channel_id: voice_id,
+                user_id: user_id,
+                guild_id: guild_id,
+            });
     });
 
     let iceServers = [
@@ -183,11 +189,14 @@
             remote_media.attr("controls", "");
             peer_media_elements[peer_id] = remote_media;
             $('body').append(remote_media);
+            console.log("remote_media", event.streams[0]);
             attachMediaStream(remote_media[0], event.streams[0]);
         }
 
-        /* Add our local stream */
-        peer_connection.addStream(local_media_stream);
+        if(local_media_stream != null){
+            peer_connection.addStream(local_media_stream);
+        }
+        // peer_connection.addStream(local_media_stream);
 
         if (config.should_create_offer) {
             console.log("Creating RTC offer to ", peer_id);
@@ -243,8 +252,8 @@
             })
             .catch(function() {
                 console.log("Access denied for audio/video");
-                alert("You chose not to provide access to the camera/microphone, demo will not work.");
-                if (errorback) errorback();
+                alert("You chose not to provide access to the camera/microphone");
+                if (callback) callback();
             })
     }
 

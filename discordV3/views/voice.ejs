@@ -21,14 +21,20 @@
         </a>
       </li>
       <li>
-        <a class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600" style="color: #C81E1E !important">
+        <a id="open-banModal" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600" data-modal-toggle="ban-modal" style="color: #C81E1E !important">
            <i class='bx bxs-user-x'></i>
             Ban user
         </a>
       </li>
       <li>
+          <a id="open-unbanModal" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600" data-modal-toggle="unban-modal" style="color: #0E9F6E !important">
+             <i class='bx bxs-user-check'></i>
+              Unban user
+          </a>
+        </li>
       <% } %>
-        <a onclick="location.replace('<%= home %><%= nodePort %>/guild/<%= guild_id %>')" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+      <li>
+        <a onclick="return false;" style="opacity: 0.5" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white cursor-not-allowed">
            <i class='bx bxs-user-x'></i>
             Leave channel
         </a>
@@ -59,6 +65,64 @@
                     </div>
                 </form>
                 <ul class="my-4 space-y-3" id="kick-users"></ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="ban-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
+    <div class="relative p-4 w-full max-w-md h-full md:h-auto">
+        <!-- Modal content -->
+        <div class="relative rounded-lg shadow dark:bg-gray-700">
+            <button type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-toggle="ban-modal">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+            </button>
+            <!-- Modal header -->
+            <div class="py-4 px-6 rounded-t border-b dark:border-gray-600">
+                <h3 class="text-base font-semibold text-gray-900 lg:text-xl dark:text-white" style="color: red !important">
+                    Ban user
+                </h3>
+            </div>
+            <!-- Modal body -->
+            <div class="p-6">
+                <p class="text-sm font-normal text-gray-500 dark:text-gray-400"></p>
+                <form class="space-y-6" action="#">
+                    <div>
+                        <label for="banUser" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Select the user you want to <a style="color: red !important;"> ban </a></label>
+                        <input type="text" name="banUser" id="banUser" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="Username" required>
+                    </div>
+                </form>
+                <ul class="my-4 space-y-3" id="ban-users"></ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="unban-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
+    <div class="relative p-4 w-full max-w-md h-full md:h-auto">
+        <!-- Modal content -->
+        <div class="relative rounded-lg shadow dark:bg-gray-700">
+            <button type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-toggle="unban-modal">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+            </button>
+            <!-- Modal header -->
+            <div class="py-4 px-6 rounded-t border-b dark:border-gray-600">
+                <h3 class="text-base font-semibold text-gray-900 lg:text-xl dark:text-white" style="color: lime !important">
+                    Unban user
+                </h3>
+            </div>
+            <!-- Modal body -->
+            <div class="p-6">
+                <p class="text-sm font-normal text-gray-500 dark:text-gray-400"></p>
+                <form class="space-y-6" action="#">
+                    <div>
+                        <label for="unbanUser" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Select the user you want to <a style="color: lime !important;"> unban </a></label>
+                        <input type="text" name="unbanUser" id="unbanUser" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="Username" required>
+                    </div>
+                </form>
+                <ul class="my-4 space-y-3" id="unban-users"></ul>
             </div>
         </div>
     </div>
