@@ -1,5 +1,7 @@
+<!doctype html>
 @extends('layouts.basic')
 @section('title', 'Edit Profile')
+
 <link rel="stylesheet"  href="{{$home}}{{$nodePort}}/stylesheets/profileSettings.css"/>
 @php
     $defaultImage = false;
@@ -72,21 +74,21 @@
                                 <label class="small mb-1" for="inputUsername">Username</label>
                                 <input class="form-control shadow-none" name="username" id="inputUsername" type="text" placeholder="Enter your username" value="{{$username}}">
                             </div>
-                            <div class="row gx-3 mb-3">
+                            <div class="row gx-3 mb-3 mt-2">
                                 <div class="col-md-12">
                                     <label class="small mb-1" for="inputEmail">Email</label>
                                     <input class="form-control shadow-none" id="inputEmail" name="email" type="text" placeholder="E-mail" value="{{$email}}">
                                 </div>
-                                <div class="col-md-12">
+                                <div class="col-md-12 mt-2">
                                     <label class="small mb-1" for="inputPassword">Change Password</label>
                                     <input class="form-control shadow-none" name="passwordChange" id="inputPassword" type="password" placeholder="Enter your password">
                                 </div>
-                                <div class="col-md-12">
+                                <div class="col-md-12 mt-2">
                                     <label class="small mb-1" for="inputPasswordConfirm">Confirm Password</label>
                                     <input class="form-control shadow-none" name="passwordConfirm" id="inputPasswordConfirm" type="password" placeholder="Confirm your password">
                                 </div>
-                                <div class="col-md-12">
-                                    <label class="small mb-1" for="currentPassword">Current password</label>
+                                <div class="col-md-12 mt-4">
+                                    <label class="small mb-1" for="currentPassword">Current password (Required)</label>
                                     <input class="form-control shadow-none" name="currentPassword" id="currentPassword" type="password" required placeholder="Enter your password">
                                 </div>
                             </div>
