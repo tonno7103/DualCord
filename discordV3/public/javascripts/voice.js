@@ -58,7 +58,6 @@
         { urls: 'stun:stun1.l.google.com:19302' },
         { urls: 'stun:stun2.l.google.com:19302' },
         { urls: 'stun:stun3.l.google.com:19302' },
-        { urls: 'stun:stun4.l.google.com:19302' },
     ];
 
     document.getElementById('mute').addEventListener('click', () => {
@@ -170,6 +169,7 @@
 
         peer_connection.onicecandidate = function(event) {
             if (event.candidate) {
+                console.log('Sis');
                 socket.emit('relayICECandidate', {
                     'peer_id': peer_id,
                     'ice_candidate': {

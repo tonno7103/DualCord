@@ -13,11 +13,11 @@ function loadCommands(){
 
         switch (operator) {
             case '==':
-                return (v1 == v2) ? options.fn(this) : options.inverse(this);
+                return (v1 === v2) ? options.fn(this) : options.inverse(this);
             case '===':
                 return (v1 === v2) ? options.fn(this) : options.inverse(this);
             case '!=':
-                return (v1 != v2) ? options.fn(this) : options.inverse(this);
+                return (v1 !== v2) ? options.fn(this) : options.inverse(this);
             case '!==':
                 return (v1 !== v2) ? options.fn(this) : options.inverse(this);
             case '<':
@@ -49,7 +49,7 @@ function loadBluePrints(app){
         const router = require("../routes/" + file);
         app.use(router);
     })
-    console.log("[OUTPUT] Utils: BluePrints loaded")
+    console.log("[Loader.js] Utils: BluePrints loaded")
 }
 
 

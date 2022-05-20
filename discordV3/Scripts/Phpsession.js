@@ -7,7 +7,7 @@ const Memcached = require("memcached");
  * @param {Request} request 
  * get the memcached data using a key
  * 
- * @returns {JSON | String} 
+ * @returns {Promise}
  */
 function getData(name, request){
     return new Promise((resolve, reject) => {
@@ -29,6 +29,14 @@ function getData(name, request){
     })
 
 }
+/**
+ *
+ * @param {String} key
+ * @param {Request} value
+ * get the memcached data using a key
+ *
+ * @returns {Promise}
+ */
 async function writeData(key, value){
     return new Promise((resolve, reject) => {
         const connection = new Memcached('localhost:11211');

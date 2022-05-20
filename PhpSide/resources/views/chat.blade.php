@@ -1,5 +1,4 @@
 @extends('layouts.basic')
-@extends('layouts.sidebarElements')
 @section('title', 'Directs')
 @section('content')
 <link rel="stylesheet" href="{{$home}}{{$nodePort}}/stylesheets/directs.css"/>

@@ -37,11 +37,13 @@ class NewImageController extends Controller
             $size = getimagesize($image);
             $image->move("images/" , $imageName);
 
-            $response = Http::acceptJson()->asForm()->post($this->data['address'] . $this->data['nodePort'] . '/gif/resize', [
-                'image_name' => $imageName,
-                'width' => $size[0],
-                'height' => $size[1]
-            ]);
+            $response = Http::acceptJson()
+                ->asForm()
+                ->post($this->data['address'] . $this->data['nodePort'] . '/gif/resize', [
+                    'image_name' => $imageName,
+                    'width' => $size[0],
+                    'height' => $size[1]
+                ]);
 
         }
         else{

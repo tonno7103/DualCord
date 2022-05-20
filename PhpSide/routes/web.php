@@ -17,16 +17,16 @@ Route::get('/', function (){
 })->name('home');
 
 
-Route::get("/auth/login", NewAccountController::class . "@loginPage")->name("login");
-Route::post("/auth/login", NewAccountController::class . "@login");
-Route::get("/auth/register", NewAccountController::class . "@registerPage")->name("register");
-Route::post("/auth/register", NewAccountController::class . "@register");
+Route::get("/auth/login", NewAccountController::class . "@loginPage")->name("login")->middleware('is_not_logged');
+Route::post("/auth/login", NewAccountController::class . "@login")->middleware('is_not_logged');;
+Route::get("/auth/register", NewAccountController::class . "@registerPage")->name("register")->middleware('is_not_logged');;
+Route::post("/auth/register", NewAccountController::class . "@register")->middleware('is_not_logged');;
 Route::get("/auth/logout", NewAccountController::class . "@logout")->middleware('is_logged');
 
-Route::get("/dashboard", function (){
-    $data = json_decode(file_get_contents(storage_path() . "/configs.json"), true);
-    return view("dashboard", ["home" => $data['address'], "nodePort" => $data['nodePort'], "phpPort" => $data['phpPort'], "route" => "dashboard", "title" => "Dashboard"    ]);
-})->middleware('is_logged');
+//Route::get("/dashboard", function (){
+//    $data = json_decode(file_get_contents(storage_path() . "/configs.json"), true);
+//    return view("dashboard", ["home" => $data['address'], "nodePort" => $data['nodePort'], "phpPort" => $data['phpPort'], "route" => "dashboard", "title" => "Dashboard"    ]);
+//})->middleware('is_logged');
 
 
 Route::get('/user/edit', NewEditProfileController::class . "@index")->name('index')->middleware('is_logged');
@@ -59,6 +59,7 @@ Route::get('/guilds', VoiceController::class . "@index")->name('voice')->middlew
 Route::get('/voices', VoiceController::class . "@getVoice")->name('getVoice')->middleware('is_logged');
 Route::get('/voices/users-amount/{id}', VoiceController::class . "@getAmount")->name('getAmount')->middleware('is_logged');
 Route::post("/guild/getChannels", VoiceController::class . "@getChannels")->name('getChannels')->middleware('is_logged'); // guild_id on post
+
 Route::post('/user/have-access/guild/{id}', VoiceController::class . "@haveAccessGuild")->name('haveAccessGuild');
 Route::post('/user/have-access/voice/{id}', VoiceController::class . "@haveAccessVoice")->name('haveAccessVoice');
 Route::post("/guild/getLevel/{guild_id}", VoiceController::class . "@getLevel")->name('getLevel');

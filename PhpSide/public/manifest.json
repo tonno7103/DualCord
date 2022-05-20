@@ -2,8 +2,8 @@
     "name": "DualCord",
     "short_name": "DualCord",
     "description": "WebApp for online voice or write :)",
-    "start_url": "/l",
-    "scope":"/l",
+    "start_url": "/",
+    "scope":"/",
     "prefer_related_applications": true,
     "icons": [
         {
@@ -34,6 +34,5 @@
     ],
     "theme_color": "#FFFFFF",
     "background_color": "#FFFFFF",
-    "display": "standalone",
-    "orientation": "portrait"
+    "display": "standalone"
 }

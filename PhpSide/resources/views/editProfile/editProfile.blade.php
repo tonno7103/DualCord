@@ -1,5 +1,4 @@
 @extends('layouts.basic')
-@extends('layouts.sidebarElements')
 @section('title', 'Edit Profile')
 <link rel="stylesheet"  href="{{$home}}{{$nodePort}}/stylesheets/profileSettings.css"/>
 @php
