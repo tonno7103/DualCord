@@ -42,10 +42,14 @@ PUSHER_APP_CLUSTER=yourregion
 MIX_PUSHER_APP_KEY="${PUSHER_APP_KEY}"
 MIX_PUSHER_APP_CLUSTER="${PUSHER_APP_CLUSTER}"
 ```
-
-2) Move to the PhpSide directory
-3) Create the empty database with the `DB_DATABASE` used on the .env file.
-4) run the following command to create the database:
+2) Change discordV3/utils/database.json to your database credentials.
+4) Move to the PhpSide directory
+5) Create the empty database with the `DB_DATABASE` used on the .env file.
+6) Run the following command:
+```
+composer install
+```
+5) run the following command to create the database:
 ```bash
 $ php artisan migrate
 ```
@@ -54,6 +58,7 @@ $ php artisan migrate
 ```bash
 $ memcached -d
 ```
+6) Change on the discordV3/utils/path.json and PhpSide/storage/configs.json the address of the site and the port if you are using a localhost set the following address: `http://localhost:`
 7) Now you can run the following command to start the application you must use two different terminals.
 ```bash
 $ ./nodeStart.bat
