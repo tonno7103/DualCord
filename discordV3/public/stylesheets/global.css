@@ -13,10 +13,11 @@ html{
 
 ::-webkit-scrollbar {
     width: 7px;
+    height: 7px;
 }
 ::-webkit-scrollbar-track {
     background-color: #272B33;
-    border-radius: 3px;
+    border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -34,8 +35,8 @@ html{
 .navbar-main{
     background: rgba( 3, 0, 0, 0.75 );
     box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
-    backdrop-filter: blur( 6.5px );
-    -webkit-backdrop-filter: blur( 6.5px );
+    backdrop-filter: blur( 7px );
+    -webkit-backdrop-filter: blur( 7px );
 }
 
 .lds-ring {
