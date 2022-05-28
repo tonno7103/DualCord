@@ -16,17 +16,11 @@ Route::get('/', function (){
     return redirect($data['address'] . $data['nodePort']);
 })->name('home');
 
-
 Route::get("/auth/login", NewAccountController::class . "@loginPage")->name("login")->middleware('is_not_logged');
 Route::post("/auth/login", NewAccountController::class . "@login")->middleware('is_not_logged');;
 Route::get("/auth/register", NewAccountController::class . "@registerPage")->name("register")->middleware('is_not_logged');;
 Route::post("/auth/register", NewAccountController::class . "@register")->middleware('is_not_logged');;
 Route::get("/auth/logout", NewAccountController::class . "@logout")->middleware('is_logged');
-
-//Route::get("/dashboard", function (){
-//    $data = json_decode(file_get_contents(storage_path() . "/configs.json"), true);
-//    return view("dashboard", ["home" => $data['address'], "nodePort" => $data['nodePort'], "phpPort" => $data['phpPort'], "route" => "dashboard", "title" => "Dashboard"    ]);
-//})->middleware('is_logged');
 
 
 Route::get('/user/edit', NewEditProfileController::class . "@index")->name('index')->middleware('is_logged');

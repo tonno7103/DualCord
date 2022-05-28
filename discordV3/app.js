@@ -5,6 +5,7 @@ const { Server } = require("socket.io");
 const app = express();
 const http = require('http').Server(app);
 const loader = require("./Scripts/loader");
+const createError = require('http-errors');
 loader.loadCommands();
 loader.loadBluePrints(app);
 
@@ -18,6 +19,26 @@ app.use("/l", proxy(`127.0.0.1:8081`, {}));
 
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(function(req, res, next) {
+  next(createError(404));
+});
+
+// error handler
+app.use(function(err, req, res, next) {
+  // set locals, only providing error in development
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+  // render the error page
+  const { address, nodePort, phpPort } = require("./utils/path.json");
+  res.status(err.status || 500);
+  res.render('404', {
+    'home': address,
+    'nodePort': nodePort,
+    'phpPort': phpPort
+  });
+});
+
 http.listen(8080, ()=>{
   console.log("Server started at http://localhost:8080")
 });
@@ -30,7 +51,6 @@ const io = new Server(http, {
 
 let channels = {};
 let sockets = {};
-
 
 io.on('connection', (socket) => {
   socket.channels = {};
