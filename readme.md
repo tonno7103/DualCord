@@ -49,9 +49,10 @@ MIX_PUSHER_APP_CLUSTER="${PUSHER_APP_CLUSTER}"
 ```
 composer install
 ```
-5) run the following command to create the database:
+5) run the following command to create the database and to generate the encryption key:
 ```bash
 $ php artisan migrate
+$ php artisan key:generate
 ```
 5) move back to the root directory
 6) Start memcached with the following command:
