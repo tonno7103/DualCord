@@ -1,0 +1,33 @@
+@keyframes deround {
+    0% {
+        border-radius: 50%;
+    }
+    100% {
+        border-radius: 33%;
+    }
+}
+
+@keyframes selector {
+    0%  {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+
+
+.deround:hover {
+    animation: deround 0.2s;
+    animation-fill-mode: forwards;
+}
+
+.border-radius-30 {
+    border-radius: 33% !important;
+}
+
+.selector {
+    animation: selector 1s;
+    animation-fill-mode: forwards;
+}
