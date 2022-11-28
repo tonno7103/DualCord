@@ -47,7 +47,7 @@ MIX_PUSHER_APP_CLUSTER="${PUSHER_APP_CLUSTER}"
 5) Create the empty database with the `DB_DATABASE` used on the .env file.
 6) Run the following command:
 ```
-composer install
+$ composer install
 ```
 5) run the following command to create the database and to generate the encryption key:
 ```bash
